@@ -6,8 +6,10 @@ import { RiLinksFill } from "react-icons/ri";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Sidebar() {
+  const { user } = useAuth();
   const pathname = usePathname();
 
   const isLinks = pathname === "/dashboard/links";
@@ -45,11 +47,11 @@ export default function Sidebar() {
             className="size-20 bg-brand-light-purple/20 rounded-full"
           >
             <Image
-              src={"/profile.svg"}
+              src={`/${user?.avatar}` || "/profile.webp"}
               width={50}
               height={50}
               alt="profile"
-              className="w-full h-full"
+              className="w-full h-full rounded-full"
             />
           </Link>
         </div>

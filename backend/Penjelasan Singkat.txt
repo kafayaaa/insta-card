@@ -1,0 +1,31 @@
+npm install express-rate-limit
+
+📊 PUBLIC ENDPOINTS
+GET  /api/public/u/:username        # Get public profile
+GET  /api/public/l/:linkId         # Track and redirect link
+GET  /api/public/stats             # Platform statistics
+GET  /api/health                   # Health check
+
+🔐 AUTH ENDPOINTS
+POST /api/users/register           # Register user
+POST /api/users/login              # Login user
+
+👤 USER ENDPOINTS
+PUT  /api/users/profile            # Update profile (protected)
+
+🔗 LINK ENDPOINTS
+GET  /api/links                    # Get all links (protected)
+POST /api/links                    # Create link (protected)
+PUT  /api/links/:id               # Update link (protected)
+DEL  /api/links/:id               # Delete link (protected)
+PUT  /api/links/reorder           # Reorder links (protected)
+POST /api/links/:id/track         # Track click (public)
+
+📈 ANALYTICS ENDPOINTS
+GET  /api/analytics               # Get analytics (protected)
+
+🎨 THEME ENDPOINTS
+GET  /api/themes/available        # Get available themes
+GET  /api/themes                  # Get user theme (protected)
+PUT  /api/themes                  # Update theme (protected)
+

@@ -4,6 +4,8 @@ import AuthForm from "@/components/layout/AuthForm";
 import AuthImage from "@/components/layout/AuthImage";
 import AuthButton from "@/components/ui/AuthButton";
 import AuthInput from "@/components/ui/AuthInput";
+import { useAuth } from "@/context/AuthContext";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -11,18 +13,30 @@ export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
+  const { login, setUser } = useAuth();
+
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if (email === "mail@example.com" && password === "12345678") {
-        router.push("/dashboard/links");
-        alert("Login successful!");
-      }
-      return;
+      const res = await axios.post("http://localhost:5000/api/users/login", {
+        email,
+        password,
+      });
+
+      // Pastikan API mengembalikan token dan user
+      const { token, user } = res.data;
+
+      // Simpan token ke context
+      login(token, user);
+
+      // Simpan user optional jika API mengembalikan data user
+      if (user) setUser(user);
+
+      alert("Login successful!");
+      router.push("/dashboard/links");
     } catch (error) {
       console.error("LOGIN ERROR:", error);
       alert("Login failed!");
-      return;
     }
   };
 
@@ -33,6 +47,7 @@ export default function SignInPage() {
         textColor="text-brand-light-purple"
         bgColor="bg-brand-dark-purple"
       />
+
       <AuthForm
         onSubmit={handleSignIn}
         bgColor="bg-brand-light-purple"
@@ -53,6 +68,7 @@ export default function SignInPage() {
           placeholder="password"
           onChange={(e) => setPassword(e.target.value)}
         />
+
         <AuthButton buttonText="Sign In" bgButtonColor="bg-brand-dark-purple" />
       </AuthForm>
     </div>

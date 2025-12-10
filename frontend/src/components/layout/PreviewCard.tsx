@@ -1,6 +1,7 @@
 import { useCard } from "@/context/CardContext";
 import LinkCard from "./LinkCard";
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
 
 interface Props {
   layout?: "column" | "grid";
@@ -12,6 +13,7 @@ export default function PreviewCard({
   background = "bg-zinc-50/50",
 }: Props) {
   const { link } = useCard();
+  const { user } = useAuth();
 
   return (
     <div
@@ -19,11 +21,17 @@ export default function PreviewCard({
     >
       <div className="w-full flex flex-col items-center justify-center gap-3">
         <div className="size-23 bg-brand-light-purple/20 rounded-full">
-          <Image src="/profile.svg" alt="profile" width={100} height={100} />
+          <Image
+            src={`/${user?.avatar}` || "/profile.webp"}
+            alt="profile"
+            width={100}
+            height={100}
+            className="rounded-full"
+          />
         </div>
         <div className="text-center">
-          <h1 className="text-xl font-medium">username</h1>
-          <p>The bio of this current user active</p>
+          <h1 className="text-xl font-medium">{user?.username}</h1>
+          <p>{user?.bio}</p>
         </div>
       </div>
       {layout === "column" ? (

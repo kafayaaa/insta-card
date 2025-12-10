@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, Comfortaa } from "next/font/google";
 import "./globals.css";
 import { CardProvider } from "@/context/CardContext";
+import { AuthProvider } from "@/context/AuthContext";
 
 const bricolageGrotesque = Bricolage_Grotesque({
   variable: "--font-bricolage-grotesque",
@@ -29,7 +30,9 @@ export default function RootLayout({
         className={`${bricolageGrotesque.variable} ${comfortaa.variable}  antialiased`}
       >
         <div className="font-comfortaa text-brand-black">
-          <CardProvider>{children}</CardProvider>
+          <AuthProvider>
+            <CardProvider>{children}</CardProvider>
+          </AuthProvider>
         </div>
       </body>
     </html>
