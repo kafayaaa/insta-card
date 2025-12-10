@@ -1,0 +1,15 @@
+interface Props {
+  buttonText: string;
+  bgButtonColor: string;
+}
+
+export default function AuthButton({ buttonText, bgButtonColor }: Props) {
+  return (
+    <button
+      type="submit"
+      className={`w-fit px-10 py-3 ${bgButtonColor} text-brand-white font-extrabold rounded-full hover:scale-105 transition-all duration-300 ease-out`}
+    >
+      {buttonText}
+    </button>
+  );
+}

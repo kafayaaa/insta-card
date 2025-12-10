@@ -5,6 +5,7 @@ import { TbPlayCardStarFilled } from "react-icons/tb";
 import { RiLinksFill } from "react-icons/ri";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -41,8 +42,16 @@ export default function Sidebar() {
         <div className="w-full flex items-center justify-center">
           <Link
             href="/dashboard/profile"
-            className="size-20 rounded-full bg-brand-light-purple"
-          ></Link>
+            className="size-20 bg-brand-light-purple/20 rounded-full"
+          >
+            <Image
+              src={"/profile.svg"}
+              width={50}
+              height={50}
+              alt="profile"
+              className="w-full h-full"
+            />
+          </Link>
         </div>
       </div>
     </div>

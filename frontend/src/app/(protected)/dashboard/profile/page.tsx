@@ -1,4 +1,5 @@
 import ProfileEditCard from "@/components/layout/ProfileEditCard";
+import Image from "next/image";
 import { BiLogOutCircle } from "react-icons/bi";
 
 export default function ProfilePage() {
@@ -12,7 +13,9 @@ export default function ProfilePage() {
       </div>
       <div className="relative w-full h-full max-w-2xl flex flex-col gap-15">
         <ProfileEditCard title="Photo Profile" isProfile={true}>
-          <div className="size-23 mt-2 rounded-full bg-zinc-200"></div>
+          <div className="size-23 mt-2 rounded-full bg-brand-light-purple/20">
+            <Image src="/profile.svg" width={100} height={100} alt="profile" />
+          </div>
         </ProfileEditCard>
         <ProfileEditCard title="Username">username</ProfileEditCard>
         <ProfileEditCard title="Bio">
