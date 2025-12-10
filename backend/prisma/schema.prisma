@@ -1,0 +1,55 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  bio       String?
+  avatar    String?
+  theme     String   @default("default")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  links     Link[]
+  analytics Analytics[]
+  
+  @@map("users")
+}
+
+model Link {
+  id          String   @id @default(cuid())
+  title       String
+  url         String
+  icon        String?
+  order       Int
+  clickCount  Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("links")
+}
+
+model Analytics {
+  id        String   @id @default(cuid())
+  date      DateTime @default(now())
+  linkId    String?
+  clicks    Int      @default(0)
+  pageViews Int      @default(0)
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("analytics")
+}
