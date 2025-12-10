@@ -1,13 +1,13 @@
 type BackgroundColorPalleteProps = {
-  bgColor: string;
+  className: string;
 };
 
 export default function BackgroundColorPallete({
-  bgColor,
+  className,
 }: BackgroundColorPalleteProps) {
   return (
     <div
-      className={`w-full aspect-square bg-${bgColor} rounded-4xl cursor-pointer hover:-translate-y-2 transition-all duration-200 ease-out`}
+      className={`w-full aspect-square ${className} rounded-4xl cursor-pointer hover:-translate-y-2 transition-all duration-200 ease-out`}
     ></div>
   );
 }

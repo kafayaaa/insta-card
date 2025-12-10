@@ -40,9 +40,6 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-}
-
-@theme {
   --color-brand-white: #fdf9ff;
   --color-brand-black: #0b0015;
   --color-brand-light-purple: #e0aaff;
