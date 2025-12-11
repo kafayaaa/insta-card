@@ -32,17 +32,17 @@ router.post(
   createLink
 );
 router.put(
+  "/reorder",
+  authenticateToken,
+  validateRequest(reorderLinksSchema),
+  reorderLinks
+);
+router.put(
   "/:id",
   authenticateToken,
   validateRequest(updateLinkSchema),
   updateLink
 );
 router.delete("/:id", authenticateToken, deleteLink);
-router.put(
-  "/reorder",
-  authenticateToken,
-  validateRequest(reorderLinksSchema),
-  reorderLinks
-);
 
 export default router;
