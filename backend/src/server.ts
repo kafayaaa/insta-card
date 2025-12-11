@@ -72,7 +72,6 @@ app.use("/api/analytics", analyticsRoutes);
 app.use("/api/themes", themeRoutes);
 
 app.use("/api/track", trackRoutes); // Public tracking
-app.use("/api/links", linkRoutes); // Protected links management
 app.use("/api/users", userRoutes);
 
 // Health check

@@ -159,26 +159,64 @@ export const trackLinkClick = async (req: Request, res: Response) => {
   }
 };
 
+interface ReorderItem {
+  id: string;
+  order: number;
+}
+
 export const reorderLinks = async (req: AuthRequest, res: Response) => {
   try {
-    const userId = req.userId;
-    const { links } = req.body; // Array of { id, order }
+    const userId = req.userId; // Pastikan userId ada
+    if (!userId) {
+      return res
+        .status(401)
+        .json({ error: "Unauthorized: User not identified" });
+    }
 
-    const updatePromises = links.map((link: { id: string; order: number }) =>
+    const { links } = req.body as { links: ReorderItem[] };
+
+    if (!Array.isArray(links) || links.length === 0) {
+      return res
+        .status(400)
+        .json({ error: "Invalid or empty links array provided" });
+    } // 1. Ambil ID link yang akan diupdate
+
+    const linkIds = links.map((l) => l.id); // 2. Validasi Kepemilikan (Memastikan semua ID milik user ini)
+
+    const existingLinks = await prisma.link.findMany({
+      where: {
+        id: { in: linkIds },
+        userId: userId,
+      },
+      select: { id: true },
+    });
+
+    if (existingLinks.length !== links.length) {
+      // Identifikasi ID yang hilang atau tidak dimiliki
+      const existingLinkIds = new Set(existingLinks.map((l) => l.id));
+      const missingIds = linkIds.filter((id) => !existingLinkIds.has(id));
+
+      return res.status(404).json({
+        error: "One or more links not found or do not belong to the user",
+        missingIds: missingIds,
+      });
+    } // 3. Persiapkan Operasi Update Massal dalam Transaksi
+
+    const updateOperations = links.map((item) =>
       prisma.link.updateMany({
-        where: {
-          id: link.id,
-          userId: userId!,
-        },
-        data: { order: link.order },
+        where: { id: item.id, userId: userId }, // Selalu sertakan userId untuk keamanan
+        data: { order: item.order },
       })
-    );
+    ); // 4. Jalankan Transaksi // Jika salah satu update gagal, semua akan di-rollback.
 
-    await Promise.all(updatePromises);
+    await prisma.$transaction(updateOperations);
 
-    res.json({ success: true });
+    res.json({
+      success: true,
+      message: "Link order updated successfully",
+    });
   } catch (error) {
-    console.error("Reorder links error:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Reorder links transaction error:", error);
+    res.status(500).json({ error: "Internal server error during reorder" });
   }
 };
