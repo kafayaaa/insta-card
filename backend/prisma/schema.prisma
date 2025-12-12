@@ -15,7 +15,7 @@ model User {
   password  String
   bio       String?
   avatar    String?
-  theme     String   @default("default")
+  theme     String   @default("{\"template\":\"\",\"layout\":\"column\",\"background\":\"\"}")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   

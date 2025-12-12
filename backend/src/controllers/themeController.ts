@@ -4,6 +4,15 @@ import { AuthRequest } from "../middleware/auth";
 
 const prisma = new PrismaClient();
 
+function safeParse(json: string | null) {
+  if (!json) return {};
+  try {
+    return JSON.parse(json);
+  } catch {
+    return {};
+  }
+}
+
 // Predefined themes
 export const THEMES = [
   {
@@ -68,52 +77,87 @@ export const getAvailableThemes = (req: AuthRequest, res: Response) => {
 };
 
 export const getUserTheme = async (req: AuthRequest, res: Response) => {
-  try {
+  // try {
+  //   const userId = req.userId;
+
+  //   const user = await prisma.user.findUnique({
+  //     where: { id: userId },
+  //     select: { theme: true },
+  //   });
+
+  //   const theme = THEMES.find((t) => t.id === (user?.theme || "default"));
+
+  //   res.json(theme);
+  // } catch (error) {
+  //   console.error("Get theme error:", error);
+  //   res.status(500).json({ error: "Internal server error" });
+  // }
+ try {
     const userId = req.userId;
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { theme: true },
+      select: { theme: true }
     });
 
-    const theme = THEMES.find((t) => t.id === (user?.theme || "default"));
+    const theme = safeParse(user?.theme ?? "{}");
 
     res.json(theme);
-  } catch (error) {
-    console.error("Get theme error:", error);
-    res.status(500).json({ error: "Internal server error" });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to load theme" });
   }
 };
 
 export const updateUserTheme = async (req: AuthRequest, res: Response) => {
-  try {
+  // try {
+  //   const userId = req.userId;
+  //   const { themeId } = req.body;
+
+  //   // Validate theme exists
+  //   const themeExists = THEMES.some((theme) => theme.id === themeId);
+  //   if (!themeExists) {
+  //     return res.status(400).json({ error: "Invalid theme" });
+  //   }
+
+  //   const user = await prisma.user.update({
+  //     where: { id: userId },
+  //     data: { theme: themeId },
+  //     select: {
+  //       id: true,
+  //       username: true,
+  //       theme: true,
+  //     },
+  //   });
+
+  //   const theme = THEMES.find((t) => t.id === user.theme);
+
+  //   res.json({
+  //     user,
+  //     theme,
+  //   });
+  // } catch (error) {
+  //   console.error("Update theme error:", error);
+  //   res.status(500).json({ error: "Internal server error" });
+  // }
+ try {
     const userId = req.userId;
-    const { themeId } = req.body;
 
-    // Validate theme exists
-    const themeExists = THEMES.some((theme) => theme.id === themeId);
-    if (!themeExists) {
-      return res.status(400).json({ error: "Invalid theme" });
-    }
-
-    const user = await prisma.user.update({
+    const currentUser = await prisma.user.findUnique({
       where: { id: userId },
-      data: { theme: themeId },
-      select: {
-        id: true,
-        username: true,
-        theme: true,
-      },
+      select: { theme: true }
     });
 
-    const theme = THEMES.find((t) => t.id === user.theme);
+    const oldTheme = safeParse(currentUser?.theme ?? "{}");
+    const newTheme = { ...oldTheme, ...req.body };
 
-    res.json({
-      user,
-      theme,
+    await prisma.user.update({
+      where: { id: userId },
+      data: { theme: JSON.stringify(newTheme) }
     });
-  } catch (error) {
-    console.error("Update theme error:", error);
-    res.status(500).json({ error: "Internal server error" });
+
+    res.json({ message: "Saved successfully", theme: newTheme });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to save theme" });
   }
 };

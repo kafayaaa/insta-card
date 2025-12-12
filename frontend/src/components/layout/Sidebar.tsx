@@ -46,13 +46,23 @@ export default function Sidebar() {
             href="/dashboard/profile"
             className="size-20 bg-brand-light-purple/20 rounded-full"
           >
-            <Image
-              src={`/${user?.avatar}` || "/profile.webp"}
-              width={50}
-              height={50}
-              alt="profile"
-              className="w-full h-full rounded-full"
-            />
+            {user?.avatar ? (
+              <Image
+                src={`/${user?.avatar}`}
+                width={50}
+                height={50}
+                alt="profile"
+                className="w-full h-full rounded-full"
+              />
+            ) : (
+              <Image
+                src="/profile.webp"
+                width={50}
+                height={50}
+                alt="profile"
+                className="w-full h-full rounded-full"
+              />
+            ) }
           </Link>
         </div>
       </div>

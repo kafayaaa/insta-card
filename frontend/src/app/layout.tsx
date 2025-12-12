@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Comfortaa } from "next/font/google";
 import "./globals.css";
-import { CardProvider } from "@/context/CardContext";
 import { AuthProvider } from "@/context/AuthContext";
 
 const bricolageGrotesque = Bricolage_Grotesque({
@@ -31,7 +30,7 @@ export default function RootLayout({
       >
         <div className="font-comfortaa text-brand-black">
           <AuthProvider>
-            <CardProvider>{children}</CardProvider>
+            {children}
           </AuthProvider>
         </div>
       </body>

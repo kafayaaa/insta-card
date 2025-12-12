@@ -13,9 +13,6 @@ export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const bio = "Hi there!";
-  const avatar = "http://localhost:3000/profile.svg";
-
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -28,8 +25,6 @@ export default function SignUpPage() {
         username,
         email,
         password,
-        bio,
-        avatar,
       });
 
       if (res.status === 200 || res.status === 201) {
