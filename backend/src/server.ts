@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
-import dotenv from "dotenv";
 import morgan from "morgan";
 
 import userRoutes from "./routes/users.routes";
@@ -14,7 +13,9 @@ import { apiLimiter, authLimiter } from "./middleware/rateLimiter";
 import { errorHandler } from "./middleware/errorHandler";
 import trackRoutes from "./routes/track.routes";
 
-dotenv.config();
+import dotenv from "dotenv";
+dotenv.config({ path: ".env" });
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -58,7 +59,7 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 // Apply rate limiting
-app.use("/api/", apiLimiter);
+// app.use("/api/", apiLimiter);
 app.use("/api/users/login", authLimiter);
 app.use("/api/users/register", authLimiter);
 
@@ -72,7 +73,6 @@ app.use("/api/analytics", analyticsRoutes);
 app.use("/api/themes", themeRoutes);
 
 app.use("/api/track", trackRoutes); // Public tracking
-app.use("/api/users", userRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {

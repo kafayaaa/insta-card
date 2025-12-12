@@ -14,7 +14,7 @@ router.get("/", authenticateToken, getUserTheme);
 router.put(
   "/",
   authenticateToken,
-  validateRequest(updateThemeSchema),
+  // validateRequest(updateThemeSchema),
   updateUserTheme
 );
 

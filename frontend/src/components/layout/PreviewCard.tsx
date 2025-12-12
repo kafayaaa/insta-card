@@ -9,8 +9,8 @@ interface Props {
 }
 
 export default function PreviewCard({
-  layout = "column",
-  background = "bg-zinc-50/50",
+  layout,
+  background,
 }: Props) {
   const { link } = useCard();
   const { user } = useAuth();
@@ -21,13 +21,23 @@ export default function PreviewCard({
     >
       <div className="w-full flex flex-col items-center justify-center gap-3">
         <div className="size-23 bg-brand-light-purple/20 rounded-full">
-          <Image
-            src={`/${user?.avatar}` || "/profile.webp"}
-            alt="profile"
-            width={100}
-            height={100}
-            className="rounded-full"
-          />
+           {user?.avatar ? (
+              <Image
+                src={`/${user?.avatar}`}
+                width={50}
+                height={50}
+                alt="profile"
+                className="w-full h-full rounded-full"
+              />
+            ) : (
+              <Image
+                src="/profile.webp"
+                width={50}
+                height={50}
+                alt="profile"
+                className="w-full h-full rounded-full"
+              />
+            ) }
         </div>
         <div className="text-center">
           <h1 className="text-xl font-medium">{user?.username}</h1>
