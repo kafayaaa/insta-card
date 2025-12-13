@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useCard } from "@/context/CardContext";
-import { FaPlus } from "react-icons/fa6";
+import { FaFacebook, FaInstagram, FaPlus, FaThreads, FaTiktok, FaWhatsapp, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
 
@@ -19,6 +19,9 @@ import {
 } from "@dnd-kit/sortable";
 import { Link } from "@/types/instacard";
 import axios from "axios";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { BiLogoGmail } from "react-icons/bi";
+import { FaTelegramPlane } from "react-icons/fa";
 
 export default function DashboardLinkPage() {
   const { link, setLink, removeLink, reorderLinkById } = useCard();
@@ -120,6 +123,50 @@ export default function DashboardLinkPage() {
     }
   };
 
+  interface SosmedItem {
+    name: string;
+    icon: React.ElementType;
+  }
+
+  const sosmedItems: SosmedItem[] = [
+    {
+      name: "Tiktok",
+      icon: FaTiktok,
+    },
+    {
+      name: "Instagram",
+      icon: FaInstagram,
+    },
+    {
+      name: "Facebook",
+      icon: FaFacebook,
+    },
+    {
+      name: "X",
+      icon: FaXTwitter,
+    },
+    {
+      name: "Youtube",
+      icon: FaYoutube,
+    },
+    {
+      name: "Threads",
+      icon: FaThreads,
+    },
+    {
+      name: "GMail",
+      icon: BiLogoGmail,
+    },
+    {
+      name: "Whatsapp",
+      icon: FaWhatsapp,
+    },
+    {
+      name: "Telegram",
+      icon: FaTelegramPlane,
+    },
+  ]
+
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <div className="w-full p-10 flex flex-col items-center gap-10">
@@ -137,7 +184,7 @@ export default function DashboardLinkPage() {
                 />
               </DialogTrigger>
               {open && (
-                <DialogContent className="font-comfortaa">
+                <DialogContent className="font-comfortaa rounded-4xl bg-brand-white/80 border border-brand-white/50 inset-shadow-sm inset-shadow-brand-white/50 shadow-md backdrop-blur-lg">
                   <DialogTitle className="text-xl font-bold mb-2">
                     Add Link
                   </DialogTitle>
@@ -146,18 +193,30 @@ export default function DashboardLinkPage() {
                     onSubmit={handleAddLink}
                     className="flex flex-col gap-3"
                   >
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="w-fit px-5 py-3 bg-brand-white/50 border border-brand-white/50 inset-shadow-sm inset-shadow-brand-white/50 backdrop-blur-lg cursor-pointer rounded-full">Your Social Media</DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56">
+                        {sosmedItems.map((item, index) => (              
+                          <DropdownMenuItem key={index} onClick={() => setNewTitle(item.name)} className="text-base">
+                            {item.name}
+                            <DropdownMenuShortcut>
+                              <item.icon size={20} />
+                            </DropdownMenuShortcut>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                     <input
                       type="text"
-                      className="w-full px-5 py-3 outline outline-zinc-300 rounded-full"
-                      placeholder="Link Title"
+                      className="w-full px-5 py-3 outline outline-zinc-400 rounded-full"
                       value={newTitle}
-                      onChange={(e) => setNewTitle(e.target.value)}
+                      disabled
                       required
                     />
 
                     <input
                       type="text"
-                      className="w-full px-5 py-3 outline outline-zinc-300 rounded-full"
+                      className="w-full px-5 py-3 outline outline-zinc-400 rounded-full"
                       placeholder="Your Link"
                       value={newUrl}
                       onChange={(e) => setNewUrl(e.target.value)}

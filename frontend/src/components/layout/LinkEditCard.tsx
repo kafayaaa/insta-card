@@ -3,12 +3,18 @@ import {
   FaFacebook,
   FaInstagram,
   FaQuestion,
+  FaThreads,
   FaTiktok,
   FaTrash,
+  FaWhatsapp,
+  FaXTwitter,
+  FaYoutube,
 } from "react-icons/fa6";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical } from "lucide-react";
+import { BiLogoGmail } from "react-icons/bi";
+import { FaTelegramPlane } from "react-icons/fa";
 
 export default function LinkEditCard({
   id,
@@ -51,6 +57,36 @@ export default function LinkEditCard({
         ) : title.toLowerCase() === "facebook" ? (
           <FaFacebook
             size={30}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          />
+        ) : title.toLowerCase() === "x" ? (
+          <FaXTwitter
+          size={30}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          />
+        ) : title.toLowerCase() === "youtube" ? (
+          <FaYoutube
+          size={30}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          />
+        ) : title.toLowerCase() === "threads" ? (
+          <FaThreads
+          size={30}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          />
+        ) : title.toLowerCase() === "gmail" ? (
+          <BiLogoGmail
+          size={30}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          />
+        ) : title.toLowerCase() === "whatsapp" ? (
+          <FaWhatsapp
+          size={30}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          />
+        ) : title.toLowerCase() === "telegram" ? (
+          <FaTelegramPlane
+          size={30}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           />
         ) : (

@@ -6,8 +6,10 @@ import AuthButton from "@/components/ui/AuthButton";
 import AuthInput from "@/components/ui/AuthInput";
 import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { RiHome5Fill } from "react-icons/ri";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
@@ -22,6 +24,14 @@ export default function SignInPage() {
         email,
         password,
       });
+
+      if (res.status === 401) {
+        alert("Email or password is incorrect!");
+        return;
+      } else if (res.status !== 200) {
+        alert("Login failed!");
+        return;
+      }
 
       // Pastikan API mengembalikan token dan user
       const { token, user } = res.data;
@@ -41,13 +51,10 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="w-full h-screen grid grid-cols-2">
-      <AuthImage
-        text="Join InstaCard Today!"
-        textColor="text-brand-light-purple"
-        bgColor="bg-brand-dark-purple"
-      />
-
+    <div className="relative w-full h-screen grid grid-cols-2">
+      <Link href="/" className="absolute top-10 left-10 p-3 text-xl text-brand-dark-purple bg-zinc-50/35 border border-white/50 rounded-full inset-shadow-xs inset-shadow-white shadow backdrop-blur-lg cursor-pointer hover:scale-105 transition-all duration-300 ease-out">
+          <RiHome5Fill />
+        </Link>
       <AuthForm
         onSubmit={handleSignIn}
         bgColor="bg-brand-light-purple"
@@ -71,6 +78,11 @@ export default function SignInPage() {
 
         <AuthButton buttonText="Sign In" bgButtonColor="bg-brand-dark-purple" />
       </AuthForm>
+      <AuthImage
+        text="Join InstaCard Today!"
+        textColor="text-brand-light-purple"
+        bgColor="bg-brand-dark-purple"
+      />
     </div>
   );
 }
