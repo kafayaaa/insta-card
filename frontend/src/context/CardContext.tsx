@@ -1,67 +1,122 @@
 "use client";
 
 import { LinkCardProps } from "@/types/links";
-import { createContext, useContext, useEffect, useState } from "react";
-
-interface CardSettingJSON {
-  template: string;
-  layout: "column" | "grid" | undefined;
-  background: string;
-}
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 interface CardContextType {
+  // links
   link: LinkCardProps[];
-  setLink: (link: LinkCardProps[]) => void;
+  setLink: React.Dispatch<React.SetStateAction<LinkCardProps[]>>;
   removeLink: (id: string) => void;
   reorderLinkById: (activeId: string, overId: string) => void;
-  
+
+  // theme
   template: string;
   setTemplate: (template: string) => void;
 
-  layout: "column" | "grid" | undefined;
-  setLayout: (layout: "column" | "grid" | undefined) => void;
+  layout: "column" | "grid";
+  setLayout: (layout: "column" | "grid") => void;
 
   background: string;
   setBackground: (background: string) => void;
 
-  saveCardSettings: () => Promise<void>;
+  wallpaper: string;
+  setWallpaper: (wallpaper: string) => void;
+
   loading: boolean;
 }
 
 const CardContext = createContext<CardContextType | undefined>(undefined);
 
 export const CardProvider = ({ children }: { children: React.ReactNode }) => {
+  // ===================== STATE =====================
   const [link, setLink] = useState<LinkCardProps[]>([]);
+
   const [template, setTemplate] = useState<string>("");
-  const [layout, setLayout] = useState<"column" | "grid" | undefined>("column");
+  const [layout, setLayout] = useState<"column" | "grid">("column");
   const [background, setBackground] = useState<string>("");
+  const [wallpaper, setWallpaper] = useState<string>("");
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  // LOAD DATA DARI FIELD THEME (JSON)
-useEffect(() => {
-  async function loadTheme() {
-    const token = localStorage.getItem("token");
-    if (!token) return; // <- penting! jangan fetch kalau tidak login
+  // flag untuk menandai data awal sudah di-load
+  const hasHydrated = useRef(false);
 
-    const res = await fetch("http://localhost:5000/api/themes", {
-      headers: {
-        Authorization: `Bearer ${token}`
+  // debounce autosave
+  const saveTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  // ===================== HYDRATE (THEME + LINKS) =====================
+  useEffect(() => {
+    async function hydrate() {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setLoading(false);
+        return;
       }
-    });
 
-    const data = await res.json();
+      try {
+        const [themeRes, linkRes] = await Promise.all([
+          fetch("http://localhost:5000/api/themes", {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          fetch("http://localhost:5000/api/links", {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+        ]);
 
-    if (data.background) setBackground(data.background);
-    if (data.template) setTemplate(data.template);
-    if (data.layout) setLayout(data.layout);
-  }
+        const themeData = await themeRes.json();
+        const linkData = await linkRes.json();
 
-  loadTheme();
-}, []);
+        // set theme
+        if (themeData?.template) setTemplate(themeData.template);
+        if (themeData?.layout) setLayout(themeData.layout);
+        if (themeData?.background) setBackground(themeData.background);
+        if (themeData?.wallpaper) setWallpaper(themeData.wallpaper);
 
+        // set links
+        setLink(linkData ?? []);
+      } catch (err) {
+        console.error("Failed to hydrate card context", err);
+      } finally {
+        hasHydrated.current = true;
+        setLoading(false);
+      }
+    }
 
+    hydrate();
+  }, []);
 
+  // ===================== AUTOSAVE THEME =====================
+  useEffect(() => {
+    if (!hasHydrated.current) return;
+
+    if (saveTimeout.current) clearTimeout(saveTimeout.current);
+
+    saveTimeout.current = setTimeout(async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      try {
+        await fetch("http://localhost:5000/api/themes", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ template, layout, background, wallpaper }),
+        });
+      } catch (err) {
+        console.error("Failed to autosave theme", err);
+      }
+    }, 500);
+
+    return () => {
+      if (saveTimeout.current) clearTimeout(saveTimeout.current);
+    };
+  }, [template, layout, background, wallpaper]);
+
+  // ===================== LINK HELPERS =====================
   const removeLink = (id: string) => {
     setLink((prev) => prev.filter((item) => item.id !== id));
   };
@@ -71,6 +126,7 @@ useEffect(() => {
       const oldIndex = prev.findIndex((i) => i.id === activeId);
       const newIndex = prev.findIndex((i) => i.id === overId);
       if (oldIndex === -1 || newIndex === -1) return prev;
+
       const updated = [...prev];
       const [moved] = updated.splice(oldIndex, 1);
       updated.splice(newIndex, 0, moved);
@@ -78,26 +134,7 @@ useEffect(() => {
     });
   };
 
-  // SAVE KE BACKEND KE DALAM FIELD theme (String JSON)
-  const saveCardSettings = async () => {
-    setLoading(true);
-
-    try {
-      await fetch("http://localhost:5000/api/themes", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      },
-      body: JSON.stringify({ background, layout, template })
-    }); 
-    } catch (err) {
-      console.error("Failed to save:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  // ===================== PROVIDER =====================
   return (
     <CardContext.Provider
       value={{
@@ -111,7 +148,8 @@ useEffect(() => {
         setLayout,
         background,
         setBackground,
-        saveCardSettings,
+        wallpaper,
+        setWallpaper,
         loading,
       }}
     >

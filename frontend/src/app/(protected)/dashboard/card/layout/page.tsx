@@ -1,11 +1,14 @@
 "use client";
 
 import { useCard } from "@/context/CardContext";
+import { useAutoSaveLayout } from "@/hooks/useAutoSaveLayout";
 
 export default function LayoutPage() {
   const { layout, setLayout } = useCard();
   const isColumn = layout === "column";
   const isGrid = layout === "grid";
+
+  useAutoSaveLayout();
 
   const handleLayoutChange = (newLayout: "column" | "grid") => {
     setLayout(newLayout);

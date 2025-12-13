@@ -28,29 +28,6 @@ export default function DashboardLinkPage() {
 
   const [open, setOpen] = useState(false);
 
-  const getLinks = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/links", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setLink(res.data);
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        console.log("Backend says:", error.response?.data);
-        alert(error.response?.data?.message || "Failed.");
-        return;
-      }
-      alert("Unexpected error.");
-    }
-  };
-
-  useEffect(() => {
-    getLinks();
-  }, []);
-
   const handleAddLink = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -78,9 +55,6 @@ export default function DashboardLinkPage() {
       setLink([...link, res.data]);
       console.log(res.data);
       alert("Link added successfully!");
-
-      // Refresh data dari database
-      await getLinks(); // <--- WAJIB
 
       setNewTitle("");
       setNewUrl("");
