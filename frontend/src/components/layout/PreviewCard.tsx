@@ -39,7 +39,7 @@ export default function PreviewCard() {
       {layout === "column" ? (
         <div className="w-full flex flex-col gap-5">
           {link.map((item, i) => (
-            <LinkCard key={i} title={item.title} url={item.url} icon={true} />
+            <LinkCard key={i} title={item.title} url={item.url} icon={true} iconSize={20} />
           ))}
         </div>
       ) : layout === "grid" ? (
@@ -51,6 +51,7 @@ export default function PreviewCard() {
               titleVisible={false}
               url={item.url}
               icon={true}
+              iconSize={25}
               className="w-full aspect-square"
             />
           ))}

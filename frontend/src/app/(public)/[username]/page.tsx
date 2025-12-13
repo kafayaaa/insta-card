@@ -53,7 +53,7 @@ export default async function UserPage({ params }: { params: Promise<{ username:
     <div className={`w-full min-h-screen py-20 flex flex-col items-center ${wallpaper}`}>
         <div className="w-full max-w-xl grow flex items-center justify-center">
             <div
-                  className={`w-full min-h-max px-5 pt-20 pb-10 flex flex-col items-center gap-10 border border-white/50 rounded-4xl inset-shadow-sm inset-shadow-white shadow backdrop-blur-lg ${background}`}
+                  className={`w-full min-h-max px-10 pt-20 pb-10 flex flex-col items-center gap-10 border border-white/50 rounded-4xl inset-shadow-sm inset-shadow-white shadow backdrop-blur-lg ${background}`}
                 >
                   <div className="w-full flex flex-col items-center justify-center gap-3">
                     <div className="size-23 bg-brand-light-purple/20 rounded-full">
@@ -83,7 +83,7 @@ export default async function UserPage({ params }: { params: Promise<{ username:
                   {layout === "column" ? (
                     <div className="w-full flex flex-col gap-5">
                       {profile.links?.map((item, i) => (
-                        <LinkCard key={i} title={item.title} url={item.url} icon={true} />
+                        <LinkCard key={i} title={item.title} url={item.url} icon={true} iconSize={20} />
                       ))}
                     </div>
                   ) : layout === "grid" ? (
@@ -95,7 +95,8 @@ export default async function UserPage({ params }: { params: Promise<{ username:
                           titleVisible={false}
                           url={item.url}
                           icon={true}
-                          className="w-full aspect-square"
+                          iconSize={30}
+                          className="w-full max-w-20 mx-auto aspect-square"
                         />
                       ))}
                     </div>
