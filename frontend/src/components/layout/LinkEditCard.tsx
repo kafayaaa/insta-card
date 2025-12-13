@@ -67,7 +67,7 @@ export default function LinkEditCard({
       {trash && (
         <button
           onClick={onDelete}
-          className="relative size-13 rounded-full bg-rose-500/50 border border-rose-500/25 inset-shadow-xs inset-shadow-rose-200 shadow-md backdrop-blur-lg hover:scale-105 transition-all duration-200 ease-out cursor-pointer"
+          className="relative size-13 rounded-full bg-rose-200/50 border border-rose-500/25 inset-shadow-xs inset-shadow-rose-200 shadow-md backdrop-blur-lg hover:scale-105 transition-all duration-200 ease-out cursor-pointer"
         >
           <FaTrash
             size={15}

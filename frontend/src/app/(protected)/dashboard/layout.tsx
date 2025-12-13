@@ -12,12 +12,12 @@ export default function DashboardLayout({
 }) {
   return (
       <CardProvider>
-    <ProtectedRoute>
-        <div className="w-full min-h-screen flex bg-zinc-100 text-brand-black">
-          <Sidebar />
-          <WorkSpace>{children}</WorkSpace>
-        </div>
-    </ProtectedRoute>
+        <ProtectedRoute>
+            <div className="w-full min-h-screen flex bg-zinc-100 text-brand-black">
+              <Sidebar />
+              <WorkSpace>{children}</WorkSpace>
+            </div>
+        </ProtectedRoute>
       </CardProvider>
   );
 }

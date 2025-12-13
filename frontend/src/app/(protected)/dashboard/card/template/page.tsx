@@ -1,9 +1,18 @@
 "use client";
 
 import { useCard } from "@/context/CardContext";
+import { TEMPLATE_CONFIG, TemplateId } from "@/constants/templates";
 
 export default function TemplatePage() {
-  const { setLayout, setBackground } = useCard();
+  const { setTemplate, setLayout, setBackground } = useCard();
+
+  const applyTemplate = async (templateId: TemplateId) => {
+    const config = TEMPLATE_CONFIG[templateId];
+
+    setTemplate(templateId);
+    setLayout(config.layout);
+    setBackground(config.background);
+  };
 
   return (
     <div className="w-full h-full p-10 flex flex-col items-center gap-10">
@@ -13,22 +22,18 @@ export default function TemplatePage() {
         </h1>
         <p>Choose a your template card that match your style.</p>
       </div>
+
       <div className="w-full flex gap-2">
         <button
-          onClick={() => {
-            setLayout("column");
-            setBackground("bg-brand-white/50");
-          }}
-          className="px-5 py-2 font-bold rounded-xl cursor-pointer transition-all duration-200 ease-out border"
+          onClick={() => applyTemplate("template-1")}
+          className="px-5 py-2 font-bold rounded-xl border"
         >
           Template 1
         </button>
+
         <button
-          onClick={() => {
-            setLayout("grid");
-            setBackground("bg-brand-black/50");
-          }}
-          className="px-5 py-2 font-bold rounded-xl cursor-pointer transition-all duration-200 ease-out border"
+          onClick={() => applyTemplate("template-2")}
+          className="px-5 py-2 font-bold rounded-xl border"
         >
           Template 2
         </button>

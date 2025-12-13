@@ -3,16 +3,8 @@ import LinkCard from "./LinkCard";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 
-interface Props {
-  layout?: "column" | "grid";
-  background?: string;
-}
-
-export default function PreviewCard({
-  layout,
-  background,
-}: Props) {
-  const { link } = useCard();
+export default function PreviewCard() {
+  const { link, background, layout } = useCard();
   const { user } = useAuth();
 
   return (
@@ -47,7 +39,7 @@ export default function PreviewCard({
       {layout === "column" ? (
         <div className="w-full flex flex-col gap-5">
           {link.map((item, i) => (
-            <LinkCard key={i} title={item.title} icon={true} />
+            <LinkCard key={i} title={item.title} url={item.url} icon={true} />
           ))}
         </div>
       ) : layout === "grid" ? (
@@ -57,6 +49,7 @@ export default function PreviewCard({
               key={i}
               title={item.title}
               titleVisible={false}
+              url={item.url}
               icon={true}
               className="w-full aspect-square"
             />
