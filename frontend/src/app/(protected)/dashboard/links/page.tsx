@@ -8,7 +8,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useCard } from "@/context/CardContext";
-import { FaFacebook, FaInstagram, FaPlus, FaThreads, FaTiktok, FaWhatsapp, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaPlus,
+  FaThreads,
+  FaTiktok,
+  FaWhatsapp,
+  FaXTwitter,
+  FaYoutube,
+} from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
 
@@ -19,7 +28,13 @@ import {
 } from "@dnd-kit/sortable";
 import { Link } from "@/types/instacard";
 import axios from "axios";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { BiLogoGmail } from "react-icons/bi";
 import { FaTelegramPlane } from "react-icons/fa";
 
@@ -165,23 +180,20 @@ export default function DashboardLinkPage() {
       name: "Telegram",
       icon: FaTelegramPlane,
     },
-  ]
+  ];
 
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <div className="w-full p-10 flex flex-col items-center gap-10">
+      <div className="w-full p-5 md:p-10 flex flex-col items-center gap-5 md:gap-10">
         <div className="flex items-center gap-3">
-          <h1 className="text-4xl font-bricolage-grotesque font-extrabold">
+          <h1 className="text-2xl md:text-4xl font-bricolage-grotesque font-extrabold">
             My Links
           </h1>
 
-          <div className="relative size-10 rounded-full bg-brand-light-purple/50 border border-brand-light-purple/25 inset-shadow-xs inset-shadow-brand-light-purple/50 shadow-md backdrop-blur-lg hover:scale-110 transition-all duration-200 ease-out cursor-pointer">
+          <div className="relative size-7 md:size-10 rounded-full bg-brand-light-purple/50 border border-brand-light-purple/25 inset-shadow-xs inset-shadow-brand-light-purple/50 shadow-md backdrop-blur-lg hover:scale-110 transition-all duration-200 ease-out cursor-pointer">
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger>
-                <FaPlus
-                  size={25}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-brand-dark-purple cursor-pointer"
-                />
+                <FaPlus className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-lg md:text-2xl text-brand-dark-purple cursor-pointer" />
               </DialogTrigger>
               {open && (
                 <DialogContent className="font-comfortaa rounded-4xl bg-brand-white/80 border border-brand-white/50 inset-shadow-sm inset-shadow-brand-white/50 shadow-md backdrop-blur-lg">
@@ -194,10 +206,16 @@ export default function DashboardLinkPage() {
                     className="flex flex-col gap-3"
                   >
                     <DropdownMenu>
-                      <DropdownMenuTrigger className="w-fit px-5 py-3 bg-brand-white/50 border border-brand-white/50 inset-shadow-sm inset-shadow-brand-white/50 backdrop-blur-lg cursor-pointer rounded-full">Your Social Media</DropdownMenuTrigger>
+                      <DropdownMenuTrigger className="w-fit px-5 py-3 bg-brand-white/50 border border-brand-white/50 inset-shadow-sm inset-shadow-brand-white/50 backdrop-blur-lg cursor-pointer rounded-full">
+                        Your Social Media
+                      </DropdownMenuTrigger>
                       <DropdownMenuContent className="w-56">
-                        {sosmedItems.map((item, index) => (              
-                          <DropdownMenuItem key={index} onClick={() => setNewTitle(item.name)} className="text-base">
+                        {sosmedItems.map((item, index) => (
+                          <DropdownMenuItem
+                            key={index}
+                            onClick={() => setNewTitle(item.name)}
+                            className="text-base"
+                          >
                             {item.name}
                             <DropdownMenuShortcut>
                               <item.icon size={20} />
@@ -236,7 +254,7 @@ export default function DashboardLinkPage() {
           items={link.map((item) => item.id)}
           strategy={verticalListSortingStrategy}
         >
-          <div className="w-1/2 flex flex-col gap-5">
+          <div className="w-full md:w-1/2 flex flex-col gap-3 md:gap-5">
             {link.map((item) => (
               <LinkCard
                 key={item.id} // gunakan id sebagai key

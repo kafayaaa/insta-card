@@ -77,22 +77,22 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="w-full h-full p-10 flex flex-col items-center gap-10">
+    <div className="w-full h-full p-10 flex flex-col items-center gap-5 md:gap-10">
       <div className="flex flex-col items-center gap-2">
-        <h1 className="font-bricolage-grotesque font-extrabold text-3xl ">
+        <h1 className="font-bricolage-grotesque font-extrabold text-xl md:text-3xl">
           My Profile
         </h1>
-        <p>Edit your profile here</p>
+        <p className="text-sm md:text-base">Edit your profile here</p>
       </div>
       <form
-        className="relative w-full h-full max-w-2xl flex flex-col gap-15"
+        className="relative w-full h-full max-w-2xl pb-20 md:pb-0 flex flex-col gap-5 md:gap-15"
         onSubmit={handleUpdate}
       >
         {/* Avatar */}
         <ProfileEditCard title="Photo Profile">
           <label
             htmlFor="avatar"
-            className="size-23 mt-2 rounded-full bg-brand-light-purple/20"
+            className="size-18 md:size-23 mt-2 rounded-full bg-brand-light-purple/20"
           >
             {formData.avatar ? (
               <Image
@@ -148,25 +148,25 @@ export default function ProfilePage() {
           />
         </ProfileEditCard> */}
 
+        {/* Submit button */}
+        <div className="mt-5 md:mt-10 flex justify-center">
+          <button
+            type="submit"
+            className="px-5 py-2 text-sm md:text-base rounded-full bg-brand-dark-purple text-white font-bold hover:bg-brand-purple transition-all duration-200"
+          >
+            Save Changes
+          </button>
+        </div>
+
         {/* Logout button */}
         <div className="absolute bottom-0 right-0">
           <button
             type="button"
             onClick={logout}
-            className="px-5 py-2 flex items-center gap-3 text-white font-bold rounded-full bg-rose-500/50 border border-rose-500/25 inset-shadow-xs inset-shadow-rose-200 shadow-md backdrop-blur-lg hover:scale-105 transition-all duration-200 ease-out cursor-pointer"
+            className="px-5 py-2 text-sm md:text-base flex items-center gap-3 text-white font-bold rounded-full bg-rose-500/50 border border-rose-500/25 inset-shadow-xs inset-shadow-rose-200 shadow-md backdrop-blur-lg hover:scale-105 transition-all duration-200 ease-out cursor-pointer"
           >
             <BiLogOutCircle size={25} />
             Logout
-          </button>
-        </div>
-
-        {/* Submit button */}
-        <div className="mt-10 flex justify-center">
-          <button
-            type="submit"
-            className="px-5 py-2 rounded-full bg-brand-dark-purple text-white font-bold hover:bg-brand-purple transition-all duration-200"
-          >
-            Save Changes
           </button>
         </div>
       </form>

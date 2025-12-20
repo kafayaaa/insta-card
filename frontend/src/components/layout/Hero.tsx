@@ -17,9 +17,9 @@ export default function Hero({
   return (
     <div className={`w-full min-h-screen ${bgColor} text-purple`}>
       <div
-        className={`w-7xl h-screen mx-auto ${
-          reverse ? "flex-row-reverse" : ""
-        } flex justify-center items-center`}
+        className={`w-11/12 md:w-7xl h-screen mx-auto ${
+          reverse ? "flex-col md:flex-row-reverse" : ""
+        } flex flex-col md:flex-row justify-center items-center gap-20`}
       >
         <Headline
           headline={headline}

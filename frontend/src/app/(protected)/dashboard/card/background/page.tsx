@@ -14,12 +14,14 @@ export default function DashboardCardPage() {
   };
 
   return (
-    <div className="w-full h-full p-10 flex flex-col items-center gap-10">
+    <div className="w-full h-full p-5 md:p-10 flex flex-col items-center gap-10">
       <div className="flex flex-col items-center gap-1">
-        <h1 className="font-bricolage-grotesque font-extrabold text-2xl">
+        <h1 className="font-bricolage-grotesque font-extrabold text-xl md:text-2xl">
           Background
         </h1>
-        <p>Choose a background for your card from the options below.</p>
+        <p className="text-sm md:text-base">
+          Choose a background for your card from the options below.
+        </p>
       </div>
 
       <div className="w-full max-w-xl grid grid-cols-5 gap-5">
@@ -29,17 +31,25 @@ export default function DashboardCardPage() {
         <button onClick={() => handleBackgroundChange("bg-brand-black/50")}>
           <BackgroundColorPallete className="bg-brand-black" />
         </button>
-        <button onClick={() => handleBackgroundChange("bg-brand-light-purple/50")}>
+        <button
+          onClick={() => handleBackgroundChange("bg-brand-light-purple/50")}
+        >
           <BackgroundColorPallete className="bg-brand-light-purple" />
         </button>
-        <button onClick={() => handleBackgroundChange("bg-brand-dark-purple/50")}>
+        <button
+          onClick={() => handleBackgroundChange("bg-brand-dark-purple/50")}
+        >
           <BackgroundColorPallete className="bg-brand-dark-purple" />
         </button>
 
-        <button onClick={() => handleBackgroundChange("bg-brand-light-orange/50")}>
+        <button
+          onClick={() => handleBackgroundChange("bg-brand-light-orange/50")}
+        >
           <BackgroundColorPallete className="bg-brand-light-orange" />
         </button>
-        <button onClick={() => handleBackgroundChange("bg-brand-dark-orange/50")}>
+        <button
+          onClick={() => handleBackgroundChange("bg-brand-dark-orange/50")}
+        >
           <BackgroundColorPallete className="bg-brand-dark-orange" />
         </button>
 
@@ -50,7 +60,9 @@ export default function DashboardCardPage() {
           <BackgroundColorPallete className="bg-brand-dark-sky" />
         </button>
 
-        <button onClick={() => handleBackgroundChange("bg-brand-light-lime/50")}>
+        <button
+          onClick={() => handleBackgroundChange("bg-brand-light-lime/50")}
+        >
           <BackgroundColorPallete className="bg-brand-light-lime" />
         </button>
         <button onClick={() => handleBackgroundChange("bg-brand-dark-lime/50")}>

@@ -12,9 +12,9 @@ export default function DashboardCardLayout({
 }) {
   const pathname = usePathname();
   return (
-    <div className="w-full h-full grid grid-cols-12">
-      <div className="col-span-3 w-full h-full p-10 flex flex-col gap-3 border-r border-zinc-200/50">
-       <DashboardButton
+    <div className="w-full h-full flex flex-col-reverse justify-start items-start md:flex-none md:grid md:grid-cols-12 overflow-hidden">
+      <div className="md:col-span-3 w-full h-25 md:h-full p-3 md:p-10 flex flex-row md:flex-col gap-3 border-t md:border-t-0 md:border-r border-zinc-200/50 overflow-scroll md:overflow-hidden">
+        <DashboardButton
           href="/dashboard/card/template"
           textColor="text-brand-dark-purple"
           isActive={pathname === "/dashboard/card/template"}
@@ -38,7 +38,7 @@ export default function DashboardCardLayout({
           <TbBackground size={25} />
           Background
         </DashboardButton>
-         <DashboardButton
+        <DashboardButton
           href="/dashboard/card/wallpaper"
           textColor="text-brand-dark-purple"
           isActive={pathname === "/dashboard/card/wallpaper"}
@@ -47,7 +47,7 @@ export default function DashboardCardLayout({
           Wallpaper
         </DashboardButton>
       </div>
-      <div className="col-span-9 w-full h-full">{children}</div>
+      <div className="md:col-span-9 w-full h-full">{children}</div>
     </div>
   );
 }

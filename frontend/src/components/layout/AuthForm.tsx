@@ -29,10 +29,10 @@ export default function AuthForm({
     >
       <form
         onSubmit={onSubmit}
-        className="w-1/2 p-5 flex flex-col items-center gap-10 rounded-4xl bg-brand-white/50 border-white/50 inset-shadow-xs inset-shadow-white shadow-md drop-shadow-brand-dark-orange/35 backdrop-blur-lg"
+        className="w-2/3 md:w-1/2 p-5 flex flex-col items-center gap-5 md:gap-10 rounded-4xl bg-brand-white/50 border-white/50 inset-shadow-xs inset-shadow-white shadow-md drop-shadow-brand-dark-orange/35 backdrop-blur-lg"
       >
         <h2
-          className={`font-bricolage-grotesque text-4xl ${textColor} text-center font-extrabold`}
+          className={`font-bricolage-grotesque text-2xl md:text-4xl ${textColor} text-center font-extrabold`}
         >
           {title}
         </h2>
@@ -40,11 +40,11 @@ export default function AuthForm({
           {children}
         </div>
       </form>
-      <p className={`mt-10 text-lg ${textColor}`}>
+      <p className={`mt-5 md:mt-10 text-base md:text-lg ${textColor}`}>
         {redirectText}{" "}
         <Link
           href={link}
-          className={`font-bold px-5 py-2 ml-3 text-base text-brand-white ${bgButtonColor} rounded-full`}
+          className={`font-bold px-5 py-2 ml-3 text-sm md:text-base text-brand-white ${bgButtonColor} rounded-full`}
         >
           {linkText}
         </Link>

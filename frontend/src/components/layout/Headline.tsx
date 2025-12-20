@@ -13,14 +13,14 @@ export default function Headline({
 }: HeadlineProps) {
   return (
     <div
-      className={`w-1/2 flex flex-col gap-5 text-brand-dark-purple ${
+      className={`md:mt-0 w-full md:w-1/2 flex flex-col justify-center gap-5 text-brand-dark-purple ${
         reverse ? "items-end text-end" : "items-start text-start"
       } cursor-default`}
     >
-      <h1 className="text-8xl font-extrabold font-bricolage-grotesque">
+      <h1 className="text-3xl md:text-8xl font-extrabold font-bricolage-grotesque">
         {headline}
       </h1>
-      <p className="text-2xl font-semibold ">{subheadline}</p>
+      <p className="text-base md:text-2xl font-semibold ">{subheadline}</p>
       <CTAButton text="Connect Your Link" bgColor="bg-brand-dark-purple" />
     </div>
   );
