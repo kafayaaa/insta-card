@@ -11,13 +11,13 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-      <CardProvider>
-        <ProtectedRoute>
-            <div className="w-full min-h-screen flex bg-zinc-100 text-brand-black">
-              <Sidebar />
-              <WorkSpace>{children}</WorkSpace>
-            </div>
-        </ProtectedRoute>
-      </CardProvider>
+    <CardProvider>
+      <ProtectedRoute>
+        <div className="w-full h-screen md:min-h-screen flex flex-col-reverse md:flex-row bg-zinc-100 text-brand-black">
+          <Sidebar />
+          <WorkSpace>{children}</WorkSpace>
+        </div>
+      </ProtectedRoute>
+    </CardProvider>
   );
 }

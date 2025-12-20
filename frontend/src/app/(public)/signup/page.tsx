@@ -45,8 +45,11 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="w-full h-screen grid grid-cols-2">
-      <Link href="/" className="absolute top-10 left-10 p-3 text-xl text-brand-dark-orange bg-zinc-50/35 border border-white/50 rounded-full inset-shadow-xs inset-shadow-white shadow backdrop-blur-lg cursor-pointer hover:scale-105 transition-all duration-300 ease-out">
+    <div className="w-full h-screen grid grid-cols-1 md:grid-cols-2">
+      <Link
+        href="/"
+        className="absolute top-5 md:top-10 left-5 md:left-10 p-3 text-xl text-brand-dark-orange bg-zinc-50/35 border border-white/50 rounded-full inset-shadow-xs inset-shadow-white shadow backdrop-blur-lg cursor-pointer hover:scale-105 transition-all duration-300 ease-out"
+      >
         <RiHome5Fill />
       </Link>
       <AuthForm
@@ -80,11 +83,13 @@ export default function SignUpPage() {
           disabled={loading}
         />
       </AuthForm>
+      <div className="hidden md:block">
         <AuthImage
-        text="Join InstaCard Today!"
-        textColor="text-brand-light-orange"
-        bgColor="bg-brand-dark-orange"
-      />
+          text="Join InstaCard Today!"
+          textColor="text-brand-light-orange"
+          bgColor="bg-brand-dark-orange"
+        />
+      </div>
     </div>
   );
 }

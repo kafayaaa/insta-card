@@ -6,19 +6,21 @@ import { useCard } from "@/context/CardContext";
 export default function DashboardWallpaperPage() {
   const { setWallpaper } = useCard();
 
-//   useAutoSaveBackground(); // <= aktifkan auto-save
+  //   useAutoSaveBackground(); // <= aktifkan auto-save
 
   const handleWallpaperChange = (wallpeperColor: string) => {
     setWallpaper(wallpeperColor);
   };
 
   return (
-    <div className="w-full h-full p-10 flex flex-col items-center gap-10">
+    <div className="w-full h-full p-5 md:p-10 flex flex-col items-center gap-10">
       <div className="flex flex-col items-center gap-1">
-        <h1 className="font-bricolage-grotesque font-extrabold text-2xl">
+        <h1 className="font-bricolage-grotesque font-extrabold text-xl md:text-2xl">
           Wallpaper
         </h1>
-        <p>Choose a wallpaper for your card from the options below.</p>
+        <p className="text-sm md:text-base">
+          Choose a wallpaper for your card from the options below.
+        </p>
       </div>
 
       <div className="w-full max-w-xl grid grid-cols-5 gap-5">

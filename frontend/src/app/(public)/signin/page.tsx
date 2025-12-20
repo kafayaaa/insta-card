@@ -51,10 +51,13 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="relative w-full h-screen grid grid-cols-2">
-      <Link href="/" className="absolute top-10 left-10 p-3 text-xl text-brand-dark-purple bg-zinc-50/35 border border-white/50 rounded-full inset-shadow-xs inset-shadow-white shadow backdrop-blur-lg cursor-pointer hover:scale-105 transition-all duration-300 ease-out">
-          <RiHome5Fill />
-        </Link>
+    <div className="relative w-full h-screen grid grid-cols-1 md:grid-cols-2">
+      <Link
+        href="/"
+        className="absolute top-10 left-10 p-3 text-xl text-brand-dark-purple bg-zinc-50/35 border border-white/50 rounded-full inset-shadow-xs inset-shadow-white shadow backdrop-blur-lg cursor-pointer hover:scale-105 transition-all duration-300 ease-out"
+      >
+        <RiHome5Fill />
+      </Link>
       <AuthForm
         onSubmit={handleSignIn}
         bgColor="bg-brand-light-purple"
@@ -78,11 +81,13 @@ export default function SignInPage() {
 
         <AuthButton buttonText="Sign In" bgButtonColor="bg-brand-dark-purple" />
       </AuthForm>
-      <AuthImage
-        text="Join InstaCard Today!"
-        textColor="text-brand-light-purple"
-        bgColor="bg-brand-dark-purple"
-      />
+      <div className="hidden md:block">
+        <AuthImage
+          text="Join InstaCard Today!"
+          textColor="text-brand-light-purple"
+          bgColor="bg-brand-dark-purple"
+        />
+      </div>
     </div>
   );
 }
