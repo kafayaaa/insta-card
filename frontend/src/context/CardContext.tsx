@@ -1,5 +1,6 @@
 "use client";
 
+import { AnalyticsResponse } from "@/types/instacard";
 import { LinkCardProps } from "@/types/links";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
@@ -23,6 +24,9 @@ interface CardContextType {
   wallpaper: string;
   setWallpaper: (wallpaper: string) => void;
 
+  analytics: AnalyticsResponse | null;
+  setAnalytics: (analytics: AnalyticsResponse | null) => void;
+
   loading: boolean;
 }
 
@@ -36,6 +40,7 @@ export const CardProvider = ({ children }: { children: React.ReactNode }) => {
   const [layout, setLayout] = useState<"column" | "grid">("column");
   const [background, setBackground] = useState<string>("");
   const [wallpaper, setWallpaper] = useState<string>("");
+  const [analytics, setAnalytics] = useState<AnalyticsResponse | null>(null);
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -134,6 +139,21 @@ export const CardProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
+  // ===================== ANALYTICS =====================
+  useEffect(() => {
+    try {
+      fetch("http://localhost:5000/api/analytics", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setAnalytics(data);
+        });
+    } catch (error) {
+      console.error("Failed to fetch analytics", error);
+    }
+  }, []);
+
   // ===================== PROVIDER =====================
   return (
     <CardContext.Provider
@@ -150,6 +170,8 @@ export const CardProvider = ({ children }: { children: React.ReactNode }) => {
         setBackground,
         wallpaper,
         setWallpaper,
+        analytics,
+        setAnalytics,
         loading,
       }}
     >

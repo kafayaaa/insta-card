@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
+import { FaChartSimple } from "react-icons/fa6";
 
 export default function Sidebar() {
   const { user } = useAuth();
@@ -15,6 +16,7 @@ export default function Sidebar() {
 
   const isLinks = pathname === "/dashboard/links";
   const isCard = pathname.includes("/dashboard/card");
+  const isAnalytic = pathname.includes("/dashboard/analytics");
 
   return (
     <div className="w-full md:w-60 md:h-screen pb-3 md:p-10">
@@ -39,6 +41,14 @@ export default function Sidebar() {
             >
               <TbPlayCardStarFilled size={25} />
               Cards
+            </DashboardButton>
+            <DashboardButton
+              href="/dashboard/analytics"
+              textColor="text-brand-dark-purple"
+              isActive={isAnalytic}
+            >
+              <FaChartSimple size={25} />
+              Analytic
             </DashboardButton>
             <DashboardButton
               href={`/${user?.username}`}

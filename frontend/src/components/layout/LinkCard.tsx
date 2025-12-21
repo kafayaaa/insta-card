@@ -1,9 +1,18 @@
 import Link from "next/link";
 import { BiLogoGmail } from "react-icons/bi";
 import { FaTelegramPlane } from "react-icons/fa";
-import { FaFacebook, FaInstagram, FaThreads, FaTiktok, FaWhatsapp, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaThreads,
+  FaTiktok,
+  FaWhatsapp,
+  FaXTwitter,
+  FaYoutube,
+} from "react-icons/fa6";
 
 type LinkCardProps = {
+  linkId: string;
   title: string;
   titleVisible?: boolean;
   url: string;
@@ -14,6 +23,7 @@ type LinkCardProps = {
 };
 
 export default function LinkCard({
+  linkId,
   title,
   titleVisible = true,
   url,
@@ -22,55 +32,63 @@ export default function LinkCard({
   iconSize,
   className,
 }: LinkCardProps) {
+  const handleClick = async () => {
+    await fetch(`http://localhost:5000/api/track/links/${linkId}/track`, {
+      method: "POST",
+    });
+  };
   return (
-    <Link href={url!} target="_blank"
+    <Link
+      href={url!}
+      target="_blank"
+      onClick={handleClick}
       className={`w-full px-5 py-2 flex items-center justify-center gap-4 rounded-full bg-white/50 border border-white/50 inset-shadow-sm inset-shadow-white shadow backdrop-blur-lg hover:-translate-y-1 transition-all duration-200 ease-out cursor-pointer ${className}`}
     >
       {icon && (
         <div className="relative">
           {title.toLowerCase() === "tiktok" ? (
             <FaTiktok
-            size={iconSize}
+              size={iconSize}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             />
           ) : title.toLowerCase() === "instagram" ? (
             <FaInstagram
-            size={iconSize}
+              size={iconSize}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             />
           ) : title.toLowerCase() === "facebook" ? (
             <FaFacebook
-            size={iconSize}
+              size={iconSize}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             />
           ) : title.toLowerCase() === "x" ? (
             <FaXTwitter
-            size={iconSize}
+              size={iconSize}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             />
           ) : title.toLowerCase() === "youtube" ? (
             <FaYoutube
-            size={iconSize}
+              size={iconSize}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             />
           ) : title.toLowerCase() === "threads" ? (
             <FaThreads
-            size={iconSize}
+              size={iconSize}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             />
           ) : title.toLowerCase() === "gmail" ? (
             <BiLogoGmail
-            size={iconSize}
+              size={iconSize}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             />
           ) : title.toLowerCase() === "whatsapp" ? (
             <FaWhatsapp
-            size={iconSize}
+              size={iconSize}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             />
           ) : title.toLowerCase() === "telegram" ? (
             <FaTelegramPlane
-            size={iconSize}
+              size={iconSize}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             />
           ) : (
