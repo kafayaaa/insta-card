@@ -44,7 +44,7 @@ export default function UserPageClient({ profile }: { profile: User }) {
             <div className="size-18 md:size-23 bg-brand-light-purple/20 rounded-full">
               {profile.avatar ? (
                 <Image
-                  src={`/${profile.avatar}`}
+                  src={`http://localhost:5000/avatars/${profile.avatar}`}
                   width={50}
                   height={50}
                   alt="profile"

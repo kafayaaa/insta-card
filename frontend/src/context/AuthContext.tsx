@@ -6,9 +6,9 @@ import { createContext, useContext, useState } from "react";
 interface AuthContextType {
   token: string | null;
   user: UserType | null;
+  setUser: (user: UserType | null) => void;
   login: (token: string, user: UserType) => void;
   logout: () => void;
-  setUser: (user: UserType | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -26,6 +26,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return saved ? JSON.parse(saved) : null;
   });
 
+  const setUserAndPersist = (user: UserType | null) => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
+    setUser(user);
+  };
+
   const login = (token: string, user: UserType) => {
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(user));
@@ -41,7 +50,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, user, login, logout, setUser }}>
+    <AuthContext.Provider
+      value={{
+        token,
+        user,
+        login,
+        logout,
+        setUser: setUserAndPersist,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

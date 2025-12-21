@@ -56,7 +56,7 @@ export default function Sidebar() {
           >
             {user?.avatar ? (
               <Image
-                src={`/${user?.avatar}`}
+                src={`http://localhost:5000/avatars/${user.avatar}`}
                 width={50}
                 height={50}
                 alt="profile"
