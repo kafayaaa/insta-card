@@ -14,8 +14,8 @@ import { errorHandler } from "./middleware/errorHandler";
 import trackRoutes from "./routes/track.routes";
 
 import dotenv from "dotenv";
+import path from "path";
 dotenv.config({ path: ".env" });
-
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -28,17 +28,27 @@ if (process.env.NODE_ENV !== "production") {
 // Security middleware
 app.use(
   helmet({
+    crossOriginResourcePolicy: {
+      policy: "cross-origin",
+    },
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
+        imgSrc: [
+          "'self'",
+          "data:",
+          "blob:",
+          "http://localhost:3000",
+          "http://localhost:5000",
+        ],
         styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
         fontSrc: ["'self'", "https://fonts.gstatic.com"],
-        imgSrc: ["'self'", "data:", "https:"],
         scriptSrc: ["'self'"],
       },
     },
   })
 );
+
 app.use(compression());
 
 // CORS configuration
@@ -57,6 +67,8 @@ app.use(
 // Body parsing
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
+app.use("/avatars", express.static(path.join(__dirname, "../public/avatars")));
 
 // Apply rate limiting
 // app.use("/api/", apiLimiter);

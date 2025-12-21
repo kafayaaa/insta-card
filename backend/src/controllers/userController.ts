@@ -143,14 +143,16 @@ export const loginUser = async (req: Request, res: Response) => {
 export const updateUserProfile = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.userId;
-    const { bio, avatar, theme } = req.body;
+    const { username, bio, theme } = req.body;
+    const avatar = req.file?.filename;
 
     const user = await prisma.user.update({
       where: { id: userId },
       data: {
+        username,
         bio,
-        avatar,
         theme,
+        ...(avatar && { avatar }),
       },
       select: {
         id: true,

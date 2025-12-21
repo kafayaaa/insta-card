@@ -13,23 +13,23 @@ export default function PreviewCard() {
     >
       <div className="w-full flex flex-col items-center justify-center gap-3">
         <div className="size-23 bg-brand-light-purple/20 rounded-full">
-           {user?.avatar ? (
-              <Image
-                src={`/${user?.avatar}`}
-                width={50}
-                height={50}
-                alt="profile"
-                className="w-full h-full rounded-full"
-              />
-            ) : (
-              <Image
-                src="/profile.webp"
-                width={50}
-                height={50}
-                alt="profile"
-                className="w-full h-full rounded-full"
-              />
-            ) }
+          {user?.avatar ? (
+            <Image
+              src={`http://localhost:5000/avatars/${user.avatar}`}
+              width={50}
+              height={50}
+              alt="profile"
+              className="w-full h-full rounded-full"
+            />
+          ) : (
+            <Image
+              src="/profile.webp"
+              width={50}
+              height={50}
+              alt="profile"
+              className="w-full h-full rounded-full"
+            />
+          )}
         </div>
         <div className="text-center">
           <h1 className="text-xl font-medium">{user?.username}</h1>
@@ -39,7 +39,13 @@ export default function PreviewCard() {
       {layout === "column" ? (
         <div className="w-full flex flex-col gap-5">
           {link.map((item, i) => (
-            <LinkCard key={i} title={item.title} url={item.url} icon={true} iconSize={20} />
+            <LinkCard
+              key={i}
+              title={item.title}
+              url={item.url}
+              icon={true}
+              iconSize={20}
+            />
           ))}
         </div>
       ) : layout === "grid" ? (
