@@ -4,7 +4,8 @@ import { useCard } from "@/context/CardContext";
 import { TEMPLATE_CONFIG, TemplateId } from "@/constants/templates";
 
 export default function TemplatePage() {
-  const { setTemplate, setLayout, setBackground } = useCard();
+  const { setTemplate, setLayout, setBackground, setWallpaper, setFontColor } =
+    useCard();
 
   const applyTemplate = async (templateId: TemplateId) => {
     const config = TEMPLATE_CONFIG[templateId];
@@ -12,10 +13,12 @@ export default function TemplatePage() {
     setTemplate(templateId);
     setLayout(config.layout);
     setBackground(config.background);
+    setWallpaper(config.wallpaper);
+    setFontColor(config.fontColor);
   };
 
   return (
-    <div className="w-full h-full p-5 md:p-10 flex flex-col items-center gap-10">
+    <div className="w-full h-full p-5 md:p-10 flex flex-col items-center gap-10 ">
       <div className="flex flex-col items-center gap-1">
         <h1 className="font-bricolage-grotesque font-extrabold text-xl md:text-2xl">
           Template
@@ -27,17 +30,24 @@ export default function TemplatePage() {
 
       <div className="w-full flex gap-2">
         <button
-          onClick={() => applyTemplate("template-1")}
+          onClick={() => applyTemplate("holy-light")}
           className="px-5 py-2 text-sm md:text-base font-bold rounded-xl border"
         >
-          Template 1
+          Holy Light
         </button>
 
         <button
-          onClick={() => applyTemplate("template-2")}
+          onClick={() => applyTemplate("dark-night")}
           className="px-5 py-2 text-sm md:text-base font-bold rounded-xl border"
         >
-          Template 2
+          Dark Night
+        </button>
+
+        <button
+          onClick={() => applyTemplate("starry-night")}
+          className="px-5 py-2 text-sm md:text-base font-bold rounded-xl border"
+        >
+          Starry Night
         </button>
       </div>
     </div>

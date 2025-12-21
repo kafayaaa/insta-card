@@ -27,10 +27,11 @@ export default function UserPageClient({ profile }: { profile: User }) {
   const layout = theme.layout;
   const background = theme.background;
   const wallpaper = theme.wallpaper;
+  const fontColor = theme.fontColor;
 
   return (
     <div
-      className={`w-full min-h-screen py-20 flex flex-col items-center ${wallpaper}`}
+      className={`w-full min-h-screen py-20 flex flex-col items-center ${wallpaper} ${fontColor}`}
     >
       <div className="w-full max-w-9/12 md:max-w-xl grow flex items-center justify-center">
         <div

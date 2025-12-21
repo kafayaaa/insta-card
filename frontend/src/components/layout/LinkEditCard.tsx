@@ -2,6 +2,7 @@ import { LinkCardProps } from "@/types/links";
 import {
   FaFacebook,
   FaInstagram,
+  FaLink,
   FaQuestion,
   FaThreads,
   FaTiktok,
@@ -90,7 +91,7 @@ export default function LinkEditCard({
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           />
         ) : (
-          <FaQuestion
+          <FaLink
             size={30}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           />
