@@ -41,6 +41,7 @@ export default function PreviewCard() {
           {link.map((item, i) => (
             <LinkCard
               key={i}
+              linkId={item.id}
               title={item.title}
               url={item.url}
               icon={true}
@@ -53,6 +54,7 @@ export default function PreviewCard() {
           {link.map((item, i) => (
             <LinkCard
               key={i}
+              linkId={item.id}
               title={item.title}
               titleVisible={false}
               url={item.url}

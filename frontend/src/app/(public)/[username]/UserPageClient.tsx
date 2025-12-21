@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 import ShareQR from "@/components/ui/QRCode";
 import { useAuth } from "@/context/AuthContext";
 import { User } from "@/types/instacard";
@@ -20,12 +21,7 @@ export default function UserPageClient({ profile }: { profile: User }) {
   const { user } = useAuth();
 
   const isOwner = user?.username === profile.username;
-  if (!isOwner)
-    return (
-      <div className="w-full h-screen flex items-center justify-center">
-        <h1 className="text-2xl font-medium">This is not your profile</h1>
-      </div>
-    );
+  if (!isOwner) return <LoadingScreen />;
 
   const theme = JSON.parse(profile.theme);
   const layout = theme.layout;
@@ -72,6 +68,7 @@ export default function UserPageClient({ profile }: { profile: User }) {
               {profile.links?.map((item, i) => (
                 <LinkCard
                   key={i}
+                  linkId={item.id}
                   title={item.title}
                   url={item.url}
                   icon={true}
@@ -84,6 +81,7 @@ export default function UserPageClient({ profile }: { profile: User }) {
               {profile.links?.map((item, i) => (
                 <LinkCard
                   key={i}
+                  linkId={item.id}
                   title={item.title}
                   titleVisible={false}
                   url={item.url}
@@ -95,7 +93,7 @@ export default function UserPageClient({ profile }: { profile: User }) {
             </div>
           ) : null}
         </div>
-        <div className="absolute bottom-10 inset-x-0 flex items-center justify-center gap-5">
+        <div className="fixed top-5 md:top-auto md:bottom-10 right-5 md:right-1/2 md:translate-x-1/2 flex items-center justify-center gap-5">
           <Dialog>
             <DialogTrigger className="p-3 bg-zinc-50/35 border border-white/50 rounded-full inset-shadow-xs inset-shadow-white shadow backdrop-blur-lg cursor-pointer hover:scale-105 transition-all duration-300 ease-out">
               <FaQrcode className="text-xl text-brand-white" />

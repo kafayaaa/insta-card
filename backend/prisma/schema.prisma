@@ -38,18 +38,23 @@ model Link {
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   
+  analytics Analytics[]
+  
   @@map("links")
 }
 
 model Analytics {
   id        String   @id @default(cuid())
   date      DateTime @default(now())
+
   linkId    String?
+  link      Link?    @relation(fields: [linkId], references: [id], onDelete: Cascade)
+
   clicks    Int      @default(0)
   pageViews Int      @default(0)
-  
+
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
   @@map("analytics")
 }

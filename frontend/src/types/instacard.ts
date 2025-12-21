@@ -33,12 +33,34 @@ export interface Link {
 export interface Analytics {
   id: string;
   date: Date;
-  linkId?: string | null;
+  linkId: string | null;
   clicks: number;
   pageViews: number;
-
   userId: string;
 
   // Relations
   user?: User;
+}
+
+export interface DailyLinkStat {
+  linkId: string;
+  title: string;
+  url?: string;
+  clicks: number;
+  views: number;
+}
+
+export type DailyStats = Record<string, DailyLinkStat[]>;
+
+export interface AnalyticsResponse {
+  totalClicks: number;
+  monthlyClicks: number;
+  monthlyViews: number;
+  topLinks: {
+    id: string;
+    title: string;
+    url: string;
+    clickCount: number;
+  }[];
+  dailyStats: DailyStats;
 }

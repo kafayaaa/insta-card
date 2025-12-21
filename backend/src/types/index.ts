@@ -59,3 +59,13 @@ export interface UpdateLinkRequest {
   order?: number;
   isActive?: boolean;
 }
+
+export type DailyLinkStats = {
+  linkId: string;
+  title: string;
+  url: string;
+  clicks: number;
+  views: number;
+};
+
+export type DailyStatsMap = Record<string, DailyLinkStats[]>;
