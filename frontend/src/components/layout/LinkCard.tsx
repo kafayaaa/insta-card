@@ -4,6 +4,7 @@ import { FaTelegramPlane } from "react-icons/fa";
 import {
   FaFacebook,
   FaInstagram,
+  FaLink,
   FaThreads,
   FaTiktok,
   FaWhatsapp,
@@ -92,7 +93,10 @@ export default function LinkCard({
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             />
           ) : (
-            ""
+            <FaLink
+              size={iconSize}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            />
           )}
         </div>
       )}

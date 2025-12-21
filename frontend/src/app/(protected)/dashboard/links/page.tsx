@@ -11,6 +11,7 @@ import { useCard } from "@/context/CardContext";
 import {
   FaFacebook,
   FaInstagram,
+  FaLink,
   FaPlus,
   FaThreads,
   FaTiktok,
@@ -43,8 +44,15 @@ export default function DashboardLinkPage() {
 
   const [newTitle, setNewTitle] = useState("");
   const [newUrl, setNewUrl] = useState("");
+  const [isCustomTitle, setIsCustomTitle] = useState(false);
+  const [iconKey, setIconKey] = useState("other");
 
   const [open, setOpen] = useState(false);
+
+  // if (isCustomTitle && newTitle.trim() === "") {
+  //   alert("Title is required");
+  //   return;
+  // }
 
   const handleAddLink = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +68,7 @@ export default function DashboardLinkPage() {
       const payload = {
         title: newTitle,
         url: normalizedUrl,
-        icon: newTitle.toLowerCase(),
+        icon: iconKey,
       };
 
       console.log("Sending payload:", payload);
@@ -141,45 +149,20 @@ export default function DashboardLinkPage() {
   interface SosmedItem {
     name: string;
     icon: React.ElementType;
+    key: string;
   }
 
   const sosmedItems: SosmedItem[] = [
-    {
-      name: "Tiktok",
-      icon: FaTiktok,
-    },
-    {
-      name: "Instagram",
-      icon: FaInstagram,
-    },
-    {
-      name: "Facebook",
-      icon: FaFacebook,
-    },
-    {
-      name: "X",
-      icon: FaXTwitter,
-    },
-    {
-      name: "Youtube",
-      icon: FaYoutube,
-    },
-    {
-      name: "Threads",
-      icon: FaThreads,
-    },
-    {
-      name: "GMail",
-      icon: BiLogoGmail,
-    },
-    {
-      name: "Whatsapp",
-      icon: FaWhatsapp,
-    },
-    {
-      name: "Telegram",
-      icon: FaTelegramPlane,
-    },
+    { name: "Tiktok", icon: FaTiktok, key: "tiktok" },
+    { name: "Instagram", icon: FaInstagram, key: "instagram" },
+    { name: "Facebook", icon: FaFacebook, key: "facebook" },
+    { name: "X", icon: FaXTwitter, key: "x" },
+    { name: "Youtube", icon: FaYoutube, key: "youtube" },
+    { name: "Threads", icon: FaThreads, key: "threads" },
+    { name: "GMail", icon: BiLogoGmail, key: "gmail" },
+    { name: "Whatsapp", icon: FaWhatsapp, key: "whatsapp" },
+    { name: "Telegram", icon: FaTelegramPlane, key: "telegram" },
+    { name: "Other", icon: FaLink, key: "other" },
   ];
 
   return (
@@ -196,7 +179,7 @@ export default function DashboardLinkPage() {
                 <FaPlus className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-lg md:text-2xl text-brand-dark-purple cursor-pointer" />
               </DialogTrigger>
               {open && (
-                <DialogContent className="font-comfortaa rounded-4xl bg-brand-white/80 border border-brand-white/50 inset-shadow-sm inset-shadow-brand-white/50 shadow-md backdrop-blur-lg">
+                <DialogContent className="font-comfortaa rounded-4xl bg-brand-white border border-brand-white/50 inset-shadow-sm inset-shadow-brand-white/50 shadow-md backdrop-blur-lg">
                   <DialogTitle className="text-xl font-bold mb-2">
                     Add Link
                   </DialogTitle>
@@ -206,14 +189,25 @@ export default function DashboardLinkPage() {
                     className="flex flex-col gap-3"
                   >
                     <DropdownMenu>
-                      <DropdownMenuTrigger className="w-fit px-5 py-3 bg-brand-white/50 border border-brand-white/50 inset-shadow-sm inset-shadow-brand-white/50 backdrop-blur-lg cursor-pointer rounded-full">
-                        Your Social Media
+                      <DropdownMenuTrigger className="w-fit px-5 py-3 flex items-center gap-2 text-brand-white bg-brand-light-purple/50 border border-brand-light-purple inset-shadow-sm inset-shadow-brand-white/50 backdrop-blur-lg rounded-full hover:scale-105 transition-all duration-200 ease-out cursor-pointer">
+                        <FaPlus className="text-lg md:text-2xl" />
+                        <p>Link</p>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent className="w-56">
                         {sosmedItems.map((item, index) => (
                           <DropdownMenuItem
                             key={index}
-                            onClick={() => setNewTitle(item.name)}
+                            onClick={() => {
+                              setIconKey(item.key);
+
+                              if (item.key === "other") {
+                                setIsCustomTitle(true);
+                                setNewTitle("");
+                              } else {
+                                setIsCustomTitle(false);
+                                setNewTitle(item.name);
+                              }
+                            }}
                             className="text-base"
                           >
                             {item.name}
@@ -226,9 +220,15 @@ export default function DashboardLinkPage() {
                     </DropdownMenu>
                     <input
                       type="text"
-                      className="w-full px-5 py-3 outline outline-zinc-400 rounded-full"
+                      className={`w-full px-5 py-3 ${
+                        isCustomTitle
+                          ? "outline outline-zinc-400"
+                          : "border-b-2"
+                      } rounded-full`}
                       value={newTitle}
-                      disabled
+                      placeholder={isCustomTitle ? "Enter title" : "title"}
+                      disabled={!isCustomTitle}
+                      onChange={(e) => setNewTitle(e.target.value)}
                       required
                     />
 

@@ -4,12 +4,12 @@ import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 
 export default function PreviewCard() {
-  const { link, background, layout } = useCard();
+  const { link, background, layout, fontColor } = useCard();
   const { user } = useAuth();
 
   return (
     <div
-      className={`w-full aspect-9/16 px-5 pt-20 pb-10 flex flex-col items-center gap-10 border border-white/50 rounded-4xl inset-shadow-sm inset-shadow-white shadow backdrop-blur-lg ${background}`}
+      className={`w-full aspect-9/16 px-5 pt-20 pb-10 flex flex-col items-center gap-10 border border-white/50 rounded-4xl inset-shadow-sm inset-shadow-white shadow backdrop-blur-lg ${background} ${fontColor}`}
     >
       <div className="w-full flex flex-col items-center justify-center gap-3">
         <div className="size-23 bg-brand-light-purple/20 rounded-full">

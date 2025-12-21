@@ -24,6 +24,9 @@ interface CardContextType {
   wallpaper: string;
   setWallpaper: (wallpaper: string) => void;
 
+  fontColor: string;
+  setFontColor: (fontColor: string) => void;
+
   analytics: AnalyticsResponse | null;
   setAnalytics: (analytics: AnalyticsResponse | null) => void;
 
@@ -40,6 +43,7 @@ export const CardProvider = ({ children }: { children: React.ReactNode }) => {
   const [layout, setLayout] = useState<"column" | "grid">("column");
   const [background, setBackground] = useState<string>("");
   const [wallpaper, setWallpaper] = useState<string>("");
+  const [fontColor, setFontColor] = useState<string>("");
   const [analytics, setAnalytics] = useState<AnalyticsResponse | null>(null);
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -78,6 +82,7 @@ export const CardProvider = ({ children }: { children: React.ReactNode }) => {
         if (themeData?.layout) setLayout(themeData.layout);
         if (themeData?.background) setBackground(themeData.background);
         if (themeData?.wallpaper) setWallpaper(themeData.wallpaper);
+        if (themeData?.fontColor) setFontColor(themeData.fontColor);
 
         // set links
         setLink(linkData ?? []);
@@ -109,7 +114,13 @@ export const CardProvider = ({ children }: { children: React.ReactNode }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ template, layout, background, wallpaper }),
+          body: JSON.stringify({
+            template,
+            layout,
+            background,
+            wallpaper,
+            fontColor,
+          }),
         });
       } catch (err) {
         console.error("Failed to autosave theme", err);
@@ -119,7 +130,7 @@ export const CardProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       if (saveTimeout.current) clearTimeout(saveTimeout.current);
     };
-  }, [template, layout, background, wallpaper]);
+  }, [template, layout, background, wallpaper, fontColor]);
 
   // ===================== LINK HELPERS =====================
   const removeLink = (id: string) => {
@@ -170,6 +181,8 @@ export const CardProvider = ({ children }: { children: React.ReactNode }) => {
         setBackground,
         wallpaper,
         setWallpaper,
+        fontColor,
+        setFontColor,
         analytics,
         setAnalytics,
         loading,
