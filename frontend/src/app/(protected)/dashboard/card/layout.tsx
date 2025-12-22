@@ -2,6 +2,7 @@
 
 import DashboardButton from "@/components/ui/DashboardButton";
 import { usePathname } from "next/navigation";
+import { FaFont } from "react-icons/fa6";
 import { LuLayoutGrid, LuLayoutTemplate } from "react-icons/lu";
 import { TbBackground, TbWallpaper } from "react-icons/tb";
 
@@ -46,8 +47,18 @@ export default function DashboardCardLayout({
           <TbWallpaper size={25} />
           Wallpaper
         </DashboardButton>
+        <DashboardButton
+          href="/dashboard/card/font"
+          textColor="text-brand-dark-purple"
+          isActive={pathname === "/dashboard/card/font"}
+        >
+          <FaFont size={25} />
+          Font
+        </DashboardButton>
       </div>
-      <div className="md:col-span-9 w-full h-full">{children}</div>
+      <div className="md:col-span-9 w-full h-full overflow-y-scroll hide-scrollbar">
+        {children}
+      </div>
     </div>
   );
 }
