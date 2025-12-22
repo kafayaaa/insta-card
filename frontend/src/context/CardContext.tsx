@@ -24,8 +24,17 @@ interface CardContextType {
   wallpaper: string;
   setWallpaper: (wallpaper: string) => void;
 
+  imgWallpaper: string;
+  setImgWallpaper: (imgWallpaper: string) => void;
+
   fontColor: string;
   setFontColor: (fontColor: string) => void;
+
+  fontFace: string;
+  setFontFace: (fontFace: string) => void;
+
+  fontWeight: string;
+  setFontWeight: (fontWeight: string) => void;
 
   analytics: AnalyticsResponse | null;
   setAnalytics: (analytics: AnalyticsResponse | null) => void;
@@ -43,7 +52,10 @@ export const CardProvider = ({ children }: { children: React.ReactNode }) => {
   const [layout, setLayout] = useState<"column" | "grid">("column");
   const [background, setBackground] = useState<string>("");
   const [wallpaper, setWallpaper] = useState<string>("");
+  const [imgWallpaper, setImgWallpaper] = useState<string>("");
   const [fontColor, setFontColor] = useState<string>("");
+  const [fontFace, setFontFace] = useState<string>("");
+  const [fontWeight, setFontWeight] = useState<string>("");
   const [analytics, setAnalytics] = useState<AnalyticsResponse | null>(null);
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -82,7 +94,10 @@ export const CardProvider = ({ children }: { children: React.ReactNode }) => {
         if (themeData?.layout) setLayout(themeData.layout);
         if (themeData?.background) setBackground(themeData.background);
         if (themeData?.wallpaper) setWallpaper(themeData.wallpaper);
+        if (themeData?.imgWallpaper) setImgWallpaper(themeData.imgWallpaper);
         if (themeData?.fontColor) setFontColor(themeData.fontColor);
+        if (themeData?.fontFace) setFontFace(themeData.fontFace);
+        if (themeData?.fontWeight) setFontWeight(themeData.fontWeight);
 
         // set links
         setLink(linkData ?? []);
@@ -119,7 +134,10 @@ export const CardProvider = ({ children }: { children: React.ReactNode }) => {
             layout,
             background,
             wallpaper,
+            imgWallpaper,
             fontColor,
+            fontFace,
+            fontWeight,
           }),
         });
       } catch (err) {
@@ -130,7 +148,16 @@ export const CardProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       if (saveTimeout.current) clearTimeout(saveTimeout.current);
     };
-  }, [template, layout, background, wallpaper, fontColor]);
+  }, [
+    template,
+    layout,
+    background,
+    wallpaper,
+    imgWallpaper,
+    fontColor,
+    fontFace,
+    fontWeight,
+  ]);
 
   // ===================== LINK HELPERS =====================
   const removeLink = (id: string) => {
@@ -181,8 +208,14 @@ export const CardProvider = ({ children }: { children: React.ReactNode }) => {
         setBackground,
         wallpaper,
         setWallpaper,
+        imgWallpaper,
+        setImgWallpaper,
         fontColor,
         setFontColor,
+        fontFace,
+        setFontFace,
+        fontWeight,
+        setFontWeight,
         analytics,
         setAnalytics,
         loading,

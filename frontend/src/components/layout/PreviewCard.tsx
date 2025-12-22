@@ -4,12 +4,13 @@ import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 
 export default function PreviewCard() {
-  const { link, background, layout, fontColor } = useCard();
+  const { link, background, layout, fontColor, fontFace, fontWeight } =
+    useCard();
   const { user } = useAuth();
 
   return (
     <div
-      className={`w-full aspect-9/16 px-5 pt-20 pb-10 flex flex-col items-center gap-10 border border-white/50 rounded-4xl inset-shadow-sm inset-shadow-white shadow backdrop-blur-lg ${background} ${fontColor}`}
+      className={`w-full aspect-9/16 px-5 pt-20 pb-10 flex flex-col items-center gap-10 border border-white/50 rounded-4xl inset-shadow-sm inset-shadow-white shadow backdrop-blur-lg ${background} ${fontColor} ${fontFace} ${fontWeight}`}
     >
       <div className="w-full flex flex-col items-center justify-center gap-3">
         <div className="size-23 bg-brand-light-purple/20 rounded-full">
@@ -32,7 +33,7 @@ export default function PreviewCard() {
           )}
         </div>
         <div className="text-center">
-          <h1 className="text-xl font-medium">{user?.username}</h1>
+          <h1 className="text-xl">{user?.username}</h1>
           <p>{user?.bio}</p>
         </div>
       </div>

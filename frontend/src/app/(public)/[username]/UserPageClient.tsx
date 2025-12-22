@@ -27,11 +27,17 @@ export default function UserPageClient({ profile }: { profile: User }) {
   const layout = theme.layout;
   const background = theme.background;
   const wallpaper = theme.wallpaper;
+  const imgWallpaper = theme.imgWallpaper;
   const fontColor = theme.fontColor;
+  const fontFace = theme.fontFace;
+  const fontWeight = theme.fontWeight;
 
   return (
     <div
-      className={`w-full min-h-screen py-20 flex flex-col items-center ${wallpaper} ${fontColor}`}
+      className={`w-full min-h-screen py-20 flex flex-col items-center ${wallpaper} ${fontColor} ${fontFace} ${fontWeight} bg-cover bg-center`}
+      style={{
+        backgroundImage: `url(http://localhost:3000/wallpapers/${imgWallpaper})`,
+      }}
     >
       <div className="w-full max-w-9/12 md:max-w-xl grow flex items-center justify-center">
         <div
@@ -58,9 +64,7 @@ export default function UserPageClient({ profile }: { profile: User }) {
               )}
             </div>
             <div className="text-center">
-              <h1 className="text-lg md:text-xl font-medium">
-                {profile.username}
-              </h1>
+              <h1 className="text-lg md:text-xl">{profile.username}</h1>
               <p>{profile.bio}</p>
             </div>
           </div>

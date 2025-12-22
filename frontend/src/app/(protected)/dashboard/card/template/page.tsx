@@ -4,8 +4,14 @@ import { useCard } from "@/context/CardContext";
 import { TEMPLATE_CONFIG, TemplateId } from "@/constants/templates";
 
 export default function TemplatePage() {
-  const { setTemplate, setLayout, setBackground, setWallpaper, setFontColor } =
-    useCard();
+  const {
+    setTemplate,
+    setLayout,
+    setBackground,
+    setWallpaper,
+    setImgWallpaper,
+    setFontColor,
+  } = useCard();
 
   const applyTemplate = async (templateId: TemplateId) => {
     const config = TEMPLATE_CONFIG[templateId];
@@ -14,6 +20,7 @@ export default function TemplatePage() {
     setLayout(config.layout);
     setBackground(config.background);
     setWallpaper(config.wallpaper);
+    setImgWallpaper(config.imgWallpaper);
     setFontColor(config.fontColor);
   };
 
@@ -28,7 +35,7 @@ export default function TemplatePage() {
         </p>
       </div>
 
-      <div className="w-full flex gap-2">
+      <div className="w-full grid grid-cols-3 md:grid-cols-5 gap-2">
         <button
           onClick={() => applyTemplate("holy-light")}
           className="px-5 py-2 text-sm md:text-base font-bold rounded-xl border"
@@ -48,6 +55,27 @@ export default function TemplatePage() {
           className="px-5 py-2 text-sm md:text-base font-bold rounded-xl border"
         >
           Starry Night
+        </button>
+
+        <button
+          onClick={() => applyTemplate("liquid-planet")}
+          className="px-5 py-2 text-sm md:text-base font-bold rounded-xl border"
+        >
+          Liquid Planet
+        </button>
+
+        <button
+          onClick={() => applyTemplate("beach")}
+          className="px-5 py-2 text-sm md:text-base font-bold rounded-xl border"
+        >
+          Beach
+        </button>
+
+        <button
+          onClick={() => applyTemplate("checkered-book")}
+          className="px-5 py-2 text-sm md:text-base font-bold rounded-xl border"
+        >
+          Checkered Book
         </button>
       </div>
     </div>

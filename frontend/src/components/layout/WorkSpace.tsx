@@ -19,7 +19,7 @@ type WorkSpaceProps = {
 };
 
 export default function WorkSpace({ children }: WorkSpaceProps) {
-  const { wallpaper } = useCard();
+  const { wallpaper, imgWallpaper } = useCard();
   const { user } = useAuth();
   return (
     <div className="w-full h-[90%] md:h-screen p-3 md:p-5">
@@ -28,7 +28,10 @@ export default function WorkSpace({ children }: WorkSpaceProps) {
           {children}
         </div>
         <div
-          className={`hidden relative col-span-3 p-5 md:flex justify-center items-center rounded-4xl border ${wallpaper}`}
+          className={`hidden relative col-span-3 p-5 md:flex justify-center items-center rounded-4xl border ${wallpaper} bg-center bg-cover`}
+          style={{
+            backgroundImage: `url(http://localhost:3000/wallpapers/${imgWallpaper})`,
+          }}
         >
           <PreviewCard />
           <div className="absolute bottom-10 inset-x-0 flex items-center justify-center gap-5">

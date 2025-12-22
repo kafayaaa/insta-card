@@ -97,7 +97,7 @@ export default function LinkEditCard({
           />
         )}
       </div>
-      <div className="w-1/2 md:w-full flex flex-col">
+      <div className="w-1/2 md:w-3/4 flex flex-col">
         <h2 className="text-base md:text-2xl font-bricolage-grotesque font-bold">
           {title}
         </h2>

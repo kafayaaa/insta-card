@@ -61,6 +61,9 @@ export default function AnalyticsPage() {
             Daily Stats
           </h2>
           <AnalyticStat>
+            {Object.entries(analytics?.dailyStats || {}).length === 0 && (
+              <p className="text-center">Ooops!!! There is no clicks today</p>
+            )}
             {Object.entries(analytics?.dailyStats || {}).map(
               ([date, links]) => (
                 <div key={date} className="w-full flex flex-col gap-3">
