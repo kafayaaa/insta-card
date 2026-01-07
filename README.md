@@ -1,0 +1,1 @@
+A link-in-bio app that aggregates all your social media and important links into one elegant profile page. Simplifying personal branding and online promotion, especially for creators, MSMEs, and professionals.
